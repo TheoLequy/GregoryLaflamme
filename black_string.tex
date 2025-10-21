@@ -1,0 +1,501 @@
+%% ****** Start of file aiptemplate.tex ****** %
+%%
+%%   This file is part of the files in the distribution of AIP substyles for REVTeX4.
+%%   Version 4.1 of 9 October 2009.
+%%
+%
+% This is a template for producing documents for use with 
+% the REVTEX 4.1 document class and the AIP substyles.
+% 
+% Copy this file to another name and then work on that file.
+% That way, you always have this original template file to use.
+
+\documentclass[11pt,aip,jmp,amsmath,amssymb,draft]{revtex4-1}
+%\documentclass[aip,reprint]{revtex4-1}
+\bibpunct{[}{]}{;}{n}{}{}
+
+\usepackage{comment, cleveref, color}
+\usepackage[thinc]{esdiff}
+\usepackage[english]{babel}
+\hyphenation{mani-fold}
+% \draft % marks overfull lines with a black rule on the right
+
+\begin{document}
+
+% Use the \preprint command to place your local institutional report number 
+% on the title page in preprint mode.
+% Multiple \preprint commands are allowed.
+%\preprint{}
+\title[Gregory-Laflamme Instability]{Gregory-Laflamme Instability}
+% Force line breaks with \\
+\author{Theo Lequy}
+ \email{tlequy@ethz.ch}
+ \affiliation{Eidgen{\"o}ssische Technische Hochschule Z{\"u}rich, R{\"a}mistrasse 101, 8092 Z\"urich, Switzerland}
+
+\author{Peter Hintz}
+ \email{peter.hintz@math.ethz.ch}
+ \affiliation{Eidgen{\"o}ssische Technische Hochschule Z{\"u}rich, R{\"a}mistrasse 101, 8092 Z\"urich, Switzerland}
+
+\date{\today}% It is always \today, today,
+             %  but any date may be explicitly specified
+
+\begin{abstract}
+On higher-dimensional spacetimes, there exist a large variety of different black-hole type solutions to the vacuum Einstein Field Equations. 
+By taking the product manifold of the Schwarzschild solution with the flat manifolds $\mathbb{R}$ or $\mathbb{S}^1$ we can create the black string and black ring solutions. 
+However, in contrast to the Schwarzschild solution in four spacetime dimensions, those five-dimensional solutions are generally dynamically unstable under perturbations as seen through the Gregory-Laflamme instability.
+In this article, we present a slight modification to the rigorous mathematical proof by Collingbourne \cite{collingbourne2021gregory} by remaining in the harmonic/transverse-traceless gauge throughout the derivation.
+We show that the linearized Einstein field equations admit a spherically symmetric, exponentially growing mode solution with admissible behavior at the horizon and spacelike infinity. 
+\end{abstract}
+
+\maketitle
+\section{\label{sec:intro}Introduction}
+This article is based on the rigorous proof of the Gregory-Laflamme instability for the black ring solution by Collingbourne \cite{collingbourne2021gregory} and provides a modified way of proving the instability.
+We first discuss the decomposition of the metric perturbation into different modes following the formalism of Ishibashi and Kodama. \cite{ishibashi2011perturbations}
+We identify a spherically symmetric, scalar-type spherical perturbation of the form $h_{ab} = H_{ab}(r) e^{\mu t + ikz}$ with $\mu > 0$, where $H_{ab}(r)$ is a function of the radial coordinate $r$ only, as the mode responsible for the Gregory-Laflamme instability.
+The proof then involves writing the linearized Einstein field equations in a suitable gauge, reducing the coupled ODE system to a single second-order ODE for a single master variable $\Phi(r)$. 
+This equation is then cast into a Schr{\"o}dinger form.
+Finally, the existence of an exponentially growing mode is equivalent to showing that the lowest energy-eigenvalue of the Schrödinger equation is negative which can be done through a variational argument. 
+As we recover the same Schr{\"o}dinger form as in the original paper\cite{collingbourne2021gregory}, we refer to the latter for the last part.
+
+\subsection{\label{sec:unperturbed}The Unperturbed Black Bing and String Solutions}
+Our starting point for the black ring solution is described by the five-dimensional spacetime manifold
+\begin{equation} \label{eq:5dmanifold}
+    \mathcal M^5 = \underbrace{\mathbb{R}_t \times (0,\infty)_{r} \times (\mathbb{R}/2\pi R\mathbb{Z})_z}_{\mathcal N^3} \times \underbrace{\mathbb{S}_{(\theta,\phi)}^{2}}_{\mathcal K^2}, 
+\end{equation}
+where $R$ denotes the radius of the compactified dimension. If instead of the circle of radius $R$ ($\mathbb{S} ^1 \cong \mathbb{R}/2\pi R\mathbb{Z}$), we take the real line $\mathbb{R}$, we obtain the black string solution.
+The black ring solutions with small $R$ are of higher physical interest, since there is no current empirical evidence for the existence of extra dimensions and thus the extra dimensions as considered in for example string theory must be compact and small enough to be unobservable at current experimental energy scales.\\
+We equip the manifold with a chart $(t,r,z,\theta,\phi)$, labeled as subscripts in \cref{eq:5dmanifold}, where $t$ is the time coordinate, $r$ the radial coordinate, $z\in [0,2\pi R)$ the coordinate along the compactified dimension, $\theta \in (0,\pi)$ the polar angle and $\phi \in [0,2\pi)$ the azimuthal angle.
+The manifold is then equipped with the Lorentzian metric
+\begin{equation} \label{eq:unperturbed_metric}
+    g = -f(r)\; dt\otimes dt + \frac{1}{f(r)} dr\otimes dr + dz\otimes dz + r^2\gamma, \qquad f(r) = 1+ \frac{2M}{r}
+\end{equation}
+with the metric on the two-sphere $\mathbb{S}^2$ given by $\gamma = d\theta\otimes d\theta + \sin^2\theta\; d\phi\otimes d\phi$.
+This manifold satisfies the vacuum Einstein field equations
+\begin{equation}
+    Ric[g] = 0,
+\end{equation}
+where $Ric[g]$ is the Ricci tensor corresponding to the metric $g$.
+To linearize this non-linear system of coupled PDEs, consider a parameterized family of solutions $g(\lambda)$ satisfying the vacuum Einstein field equations
+\begin{equation}
+    Ric[g(\lambda)] = 0.
+\end{equation}
+By differentiating by $\lambda$ and defining the first order perturbation $h = dg/d\lambda|_{\lambda =0}$ this leads to the linearized equation 
+\begin{equation}\label{eq:linearized_ESFE}
+    0 = -\frac{1}{2}\nabla_M\nabla_N h - \frac{1}{2}\nabla^K \nabla_K h_{MN}  + \nabla^K\nabla_{(M}h_{N)K},
+\end{equation}
+using index notation following Chapter 7.5.15 of Wald \cite{wald2010general}.
+Here, the Levi-Civita connection $\nabla_M$, raising and lowering of indices all refer to the unperturbed metric $g(0)$ and $h = {h_M}^M$ is the trace of the perturbation. 
+
+\section{\label{sec:modes}Perturbation Modes}
+Following the formalism of Ishibashi and Kodama \cite{ishibashi2011perturbations}, we can decompose the perturbation $h$ into different modes on the product manifold $\mathcal M^{m+n} = \mathcal N^m \times \mathcal K^n$ (in our case $m=3,n=2$, see \cref{eq:5dmanifold}) based on their tensorial behavior on $\mathcal K^2$. 
+We will find scalar-, vector- and tensor-type perturbations which transform accordingly under diffeomorphisms on the completely symmetric compact manifold $\mathcal K^2$.
+The key idea is to notice that the linearized Ricci tensor from \cref{eq:linearized_ESFE} will retain the same tensorial behavior and thus each of those modes can be treated separately. 
+
+To formalize this, we consider the (non-abstract) indices belonging to $\mathcal N^3$ and $\mathcal K^2$ separately with the following convention:
+\begin{enumerate}
+    \item $K,L,M,N,\dots$ for tensors on $\mathcal M^5$,
+    \item $a,b,c,\dots,h$ for tensors on $\mathcal N^3$,
+    \item $i,j,k,\dots,p$ for tensors on $\mathcal K^2$.
+\end{enumerate}
+We also denote by $\nabla_M, D_a, \hat D_i$ the covariant derivatives of each manifold. We further introduce charts $(u^a) = (t, r, z)$ on $\mathcal N^3$ and $(v^i) = (\theta, \phi)$ on $\mathcal K^2$ such that the coordinates on $\mathcal M^5$ are given by $(x^M) =(u^a,v^i)$.
+The metric takes the block-diagonal form
+\begin{equation}
+    g_{MN} dx^Mdx^N = g_{ab}(u)du^adu^b + r(u) \gamma_{ij}dv^idv^j,
+\end{equation}
+and a general symmetric perturbation can be written as
+\begin{equation}
+    h_{MN} dx^Mdx^N = h_{ab}du^adu^b + 2h_{ai} du^adv^i + h_{ij}dv^idv^j.
+\end{equation}
+Viewed on $\mathcal K^2$, the components $h_{ab}$ transform as scalars, whilst the $h_{ai}$ transform as vectors and the $h_{ij}$ as tensors of rank $2$. 
+We can further decompose the tensor and vector parts using the Hodge-decomposition theorem: Any dual vector field $v_i$ on the compact Riemannian manifold $(\mathcal K^2, \gamma_{ij})$ can be decomposed into 
+\begin{equation}
+    v_i = V_i + \hat D_i S  \label{eq:vector_hodge}  
+\end{equation}
+where $S$ is a scalar field and the remaining vector component is divergence free ($\hat D^iV_i=0$).
+Similarly, any symmetric tensor $t_{ij}$ on the $n$-dimensional manifold may be decomposed as
+\begin{equation} \label{eq:tensor_hodge}
+    t_{ij} = t_{ij}^{(2)} + 2\hat D_{(i}{t^{(1)}}_{j)} + t_L\gamma_{ij} + \hat L_{ij}t_T,
+    \qquad \hat L_{ij} = \hat D_i\hat D_j - \frac{1}{n}\gamma_{ij}\hat \Delta
+\end{equation}
+where the tensor component $t^{(2)}_{ij}$ is traceless and divergence-free (thus, vanishes in our case since $n = 2$), the vector component $t^{(1)}_i$ is also divergence free and the longitudinal and transversal $t_L, t_T$ are scalar-type components.
+
+
+\subsection{Gregory-Laflamme Instability}
+The unstable perturbation found by Gregory and Laflamme \cite{gregory1993black} takes the form
+\begin{equation} \label{eq:transverse_traceless_gauge}
+    h = e^{\mu t + ikz} \begin{pmatrix} H_{tt}(r)& H_{tr}(r) & 0 & 0 & 0\\ H_{tr}(r) & H_{rr}(r) & 0 & 0 & 0\\ 0 & 0 & 0 & 0& 0\\ 0 & 0 & 0 & H_L(r) & 0 \\ 0  & 0 & 0  & 0 & H_L(r)\sin\phi \end{pmatrix}
+\end{equation}
+in the coordinates $(t,r,z,\theta,\phi)$. Note that we have changed the order of the coordinates compared to Collingbourne.
+We seek solutions of positive growth rate $\mu$ and will also assume $k \ne 0$ throughout this analysis.
+From the form of \cref{eq:transverse_traceless_gauge} we see that this describes a scalar-type perturbation.
+\begin{comment}
+\subsection{Gauge invariance}
+The Einstein equations are invariant under infinitesimal gauge transformations generated by the vector field $\xi^M$, which transform the perturbations $h_{MN} \to h_{MN} - \mathcal L_\xi g_{MN}$. 
+\begin{align}
+h_{ab} &\to h_{ab} - 2D_{(a}\xi_{b)}, \\
+h_{ai} &\to h_{ai} - r^2 D_a\left(\frac{\xi_i}{r^2}\right) - \hat D_i\xi_a, \\
+h_{ij} &\to h_{ij} - 2\hat D_{(i}\xi_{j)} - 2r(D^ar)\xi_a\gamma_{ij}
+\end{align}
+Since the gauge transformation themselves can be classified into scalar- and vector-type components
+\begin{equation}
+    \xi_a = T_a, \qquad \xi_i = V_i + \hat D_i S,
+\end{equation}
+the scalar-type perturbations transform as follows
+\begin{align}
+    h_{ab} &\to h_{ab} - 2D_{(a}T_{b)}, \\
+    h_a &\to h_{a} - T_a- r^2 D_a\left(\frac{S}{r^2}\right) \\
+    h_L & \to h_L - 2r(D^ar)T_a - \frac{2}{n}\hat\Delta S, \\
+    h_T &\to h_T - 2S
+\end{align}
+We can define the dual vector $X_m = (X_a, X_i=\hat D_iX_L)$ with
+\begin{equation}
+    X_a := -h_a + \frac{r^2}{2}D_a\left(\frac{h_T}{r^2} \right), \qquad X_L:= -\frac{h_T}{2}
+\end{equation}
+which transforms via $X_M \to X_M + \xi_M$.
+\begin{equation}
+    (X_a,X_L) \to (X_a + T_a, X_L + S)
+\end{equation}
+Observing this, we can find the gauge-invariant combinations
+\begin{align}
+    F^{(0)}_{ab} &= h_{ab} + 2D_{(a}X_{b)}\\
+    F^{(0)} &= h_L + 2r(D^ar)X_a + \frac{2}{n}\hat \Delta X_L
+\end{align}
+Thus we should be able to rewrite the linearized Einstein field equation for a general vector type variable in terms of these $m(m+1)/2 + 1$ variables.
+\end{comment}
+
+\subsection{Harmonic Tensors}
+Since the linearized Einstein field equations are invariant under the action of the $O(3)$ group on $\mathbb S^2$, we may expand the scalar-type perturbation variables in terms of scalar harmonic functions. Those are eigenfunctions of the operator, since they satisfy
+\begin{equation}
+    (\hat \Delta + \kappa^2) Y = 0.
+\end{equation}
+For our case, where $\mathcal K^n = \mathbb S^2$ we can use the spherical harmonics $\{Y_{l,m}\}_{l\in \mathbb N^0, m=-l, \dots, +l}$ with eigenvalue $\kappa^2 = l(l+1)$.
+Since the perturbation of interest in \cref{eq:transverse_traceless_gauge} is independent of the coordinates $\theta,\phi$ it corresponds to the constant $l=0$ spherical harmonic.
+Consequently, the scalar variables $h_a$ and $h_T$ arising from the decomposition of $h_{ai}$ and $h_{ij}$ according to \cref{eq:vector_hodge} and \cref{eq:tensor_hodge} corresponding to this mode have vanishing derivatives $\hat D_ih_a = 0$ and $\hat D_ih_T=0$, and therefore do not contribute to $h_{MN}$. 
+The general procedure for finding gauge-invariant variables detailed by Ishibashi and Kodama \cite{ishibashi2011perturbations} is thus not applicable to this exceptional mode.
+
+\subsection{Choice of Gauge} 
+\label{sec:gauge_invariants} 
+Based on the previous discussion, we can restrict ourselves to scalar-type perturbations belonging to the spherically symmetric zero-mode. 
+Furthermore, due to the nature of the linear differential equation \cref{eq:linearized_ESFE}, the individual Fourier modes and exponential modes in the $t$ and $z$ decouple, allowing us to focus on perturbations of the form
+\begin{equation} \label{eq:general_scalar pert}
+    h_{MN}dx^M\otimes dx^N = e^{\mu t + ikz} (H_{ab}(r)  du^a\otimes du^b + H_L(r) \gamma_{ij}dv^i \otimes  dv^j).
+\end{equation}
+The Einstein field equations are gauge-invariant and thus perturbations corresponding to infinitesimal diffeomorphisms are trivial solutions, which are an artifact of the gauge invariance.
+To avoid having to deal with those trivial solutions, we can rewrite this in terms of gauge-invariant quantities. For this, we consider an infinitesimal gauge transformation generated by the vector field $\xi^M$, which creates the pure-gauge perturbation $h_{MN}^{(pg)} = -\mathcal L_\xi g_{MN}$.
+Since we are only interested in spherically symmetric scalar-type perturbations belonging to the same Fourier and exponential modes, we can restrict ourselves to generating fields of exactly the same form $(\xi^M) = e^{\mu t + ikz} (\xi_t(r), \xi_r(r), \xi_z(r), 0, 0)$. 
+There are of course Killing vector fields, such as the time translation $\xi^M = (1,0,0,0,0)$ or the axial rotation $\xi^M = (0,0,1,0,0)$ or any isometry of $\mathcal K^2$, but these do not have to be considered, since their resulting metric perturbations vanish.
+The form of a general pure-gauge solution is thus given by
+
+\begin{align}
+    H_{tt}^{(pg)} &= - 2 \mu \xi_t + 2 M r^{-3}(r-2 M) \xi_r, \\
+    H_{tr}^{(pg)} &= 2 M r^{-1} (r - 2M)^{-1} \xi_t - \xi_t' - \mu \xi_r , \\
+    H_{tz}^{(pg)} &= - i k \xi_t - \mu \xi_z , \label{eq:H_tz_pg}\\
+    H_{rr}^{(pg)} &= - 2 M r^{-1} (r - 2M)^{-1} \xi_r - \xi_r' \\
+    H_{rz}^{(pg)} &= - i k \xi_r - \xi_z', \label{eq:H_rz_pg}\\
+    H_{zz}^{(pg)} &= - 2 i k \xi_z, \label{eq:H_zz_pg}\\
+    H_L^{(pg)} &= -2 (r - 2 M) \xi_r.
+\end{align}
+
+The prime denotes the derivative with respect to the radial coordinate $r$ and the radial dependence of the components has been omitted for the sake of clarity.
+
+To find gauge-invariant quantities, we seek linear combinations of the metric components, that vanish in case of a pure gauge perturbations.
+For non-vanishing $k,\mu$ we can easily retrieve $\xi_t, \xi_r, \xi_z$ from the components $H_{tz}, H_{rz}, H_{zz}$ (\cref{eq:H_tz_pg,eq:H_rz_pg,eq:H_zz_pg}).We then subtract those with adequate prefactors and partial $r$-derivatives from the remaining equations to obtain four equations with vanishing right-hand sides:
+\begin{align}
+    H_{tt}^{(pg)}  + 2 \mu \left[\frac{i}{k} H_{tz}^{(pg)} - \frac{\mu}{2k^2}H_{zz}^{(pg)}\right] - 2 M r^{-3}(r-2 M) \left[\frac{i}{k} H_{rz}^{(pg)} - \frac{1}{2k^2} \partial_r H_{zz}^{(pg)}\right] &= 0, \label{eq:gi1} \\
+    H_{tr}^{(pg)}  - \left[\frac{2 M }{r (r - 2M)} - \partial_r\right] \left[\frac{i}{k} H_{tz}^{(pg)} - \frac{\mu}{2k^2}H_{zz}^{(pg)}\right] + \mu \left[\frac{i}{k} H_{rz}^{(pg)} - \frac{1}{2k^2} \partial_r H_{zz}^{(pg)}\right] &= 0,\label{eq:gi2} \\
+   H_{rr}^{(pg)} + \left[\frac{2 M }{r (r - 2M)} + \partial_r\right] \left[\frac{i}{k} H_{rz}^{(pg)} - \frac{1}{2k^2} \partial_r H_{zz}^{(pg)}\right] &= 0,\label{eq:gi3}  \\
+    H_L^{(pg)} + 2 (r - 2M) \left[\frac{i}{k} H_{rz}^{(pg)} - \frac{1}{2k^2} \partial_r H_{zz}^{(pg)}\right] &= 0.\label{eq:gi4}
+\end{align}
+
+Thus, these four linear combinations of metric components are gauge-independent. Conversely, if those linear combinations vanish for a particular perturbation, then it corresponds to the pure-gauge solution obtained from the infinitesimal perturbation
+\begin{equation} \label{eq:infinitesimal_perturbation}
+    \xi_r(r) = \frac{i}{k} H_{rz}(r) - \frac{1}{2k^2} \partial_rH_{zz}(r),\quad \xi_t(r) = \frac{i}{k} H_{tz}(r) - \frac{\mu}{2k^2}H_{zz}(r),\quad \xi_z(r) = \frac{i}{2k}H_{zz}(r),
+\end{equation}
+as can be verified via direct calculation.
+
+An equivalent approach to finding these four variables is to impose the gauge conditions  $H_{*z} = 0$ as in \cref{eq:transverse_traceless_gauge}. Starting from a general perturbation \cref{eq:general_scalar pert}, we add the pure-gauge solution generated by \cref{eq:infinitesimal_perturbation} with inverted signs to make all $z$-components vanish. 
+This condition fixes the gauge uniquely, since any pure gauge solution with vanishing $z$-components must satisfy $\xi_z = 0$ by \cref{eq:H_zz_pg} and thus also $\xi_r = 0$ and $\xi_t = 0$ by \cref{eq:H_rz_pg,eq:H_tz_pg}. As Collingbourne \cite{collingbourne2021gregory} showed in Lemma 3.6, a solution with these gauge conditions satisfies $\nabla^M h_{MN} = 0$ and ${h_{M}}^{M} = 0$, so the name harmonic/transverse-traceless gauge is appropriate. 
+
+Finally, in harmonic gauge (\cref{eq:transverse_traceless_gauge}) each of the linear combinations in \cref{eq:gi1,eq:gi2,eq:gi3,eq:gi4} reduces to one of the components $H_{tt}, H_{tr}, H_{rr}, H_L$. In the following, we will refer to them by these names. This can be interpreted as working in a harmonic gauge or characterizing the perturbation in a gauge-free way via invariants.
+
+
+\section{\label{sec:linearized} Linearized Einstein Field Equations}
+Applying the linearized Einstein field equations \cref{eq:linearized_ESFE} to the perturbation in \cref{eq:transverse_traceless_gauge} leads to a linear system of coupled ODEs for the gauge-invariant quantities $H_{tt}(r)$, $H_{tr}(r)$, $H_{rr}(r)$, $H_L(r)$ described in \cref{sec:gauge_invariants}.
+For clarity, we omit the explicit dependence on the radial coordinate and label derivatives using primes.
+\begin{align}
+    H_{tt} &= \frac{2 ( r-2 M)}{ r^3} H_L +\frac{(r-2 M)^2}{ r^2} H_{rr}, \label{eq:E4}\\
+    H_{tr}' & =\frac{2 \mu}{r (r-2 M)} H_L - \frac{2 (r-M) }{r (r-2 M)}H_{tr}+\mu H_{rr}, \label{eq:E1} \\
+    H_L' &= \frac{k^2  r^2 }{2 \mu}H_{tr} + \frac{r-M}{r(r-2M)}H_L +(r-2 M) H_{rr}, \label{eq:E2} \\
+    H_L' &= \frac{1}{r} H_L-\frac{\mu  r^3}{2(r - 2M)}  H_{tr} + \left(r-\frac{3 M}{2}\right) H_{rr} -\frac{M r^2 }{2 ( r-2 M)^2}H_{tt} +\frac{ r^3}{2 ( r-2 M)}H_{tt}', \label{eq:E3}\\
+    H_L'' &= \frac{k^2 r(r-2 M)+\mu^2 r^2}{( r-2 M)^2} H_L  -\frac{2 M }{r(r-2 M)}H_L' -\frac{2 \mu  r^2 }{ r-2 M}H_{tr} +( r-2 M) H_{rr}' \nonumber \\
+         &\quad + \frac{2 (M+r)}{r} H_{rr} -\frac{2 M  r}{( r-2 M)^2} H_{tt} +\frac{ r^2}{ r-2 M} H_{tt}'.\label{eq:E5}
+\end{align}
+Each of these equations corresponds to setting one of the components of the linearized Ricci tensor to zero, explicitly, the \cref{eq:E4,eq:E1,eq:E2,eq:E3,eq:E5} correspond to the $zz$, $tz$, $tr$, $rz$, and $L$ components, respectively.
+We note that \cref{eq:E4} corresponds to ${H_{M}}^M = 0$, which confirms that this gauge is indeed traceless, as found by Collingbourne \cite[Lemma~3.6]{collingbourne2021gregory}.
+The $tt$ and $rr$ components do not vanish trivially; however, if all other components of the linearized Ricci tensor vanish, the contracted second Bianchi identity 
+\begin{equation} \label{eq:contracted_Bianchi}
+    \nabla^M Ric_{MN} = \frac{1}{2} \nabla_N Ric_{MM}
+\end{equation}
+yields explicitly
+\begin{align}
+    \frac{\mu r}{2M- r} Ric_{tt} &= \frac{\mu}{2} \left(1-\frac{2M}{r} \right) Ric_{rr} + \frac{\mu r }{4 M- 2r} Ric_{tt} \quad \text{and} \\
+    0 &= \frac{i k}{2}  \left(1-\frac{2 M}{r}\right) Ric_{rr} + \frac{i k r}{4 M-2 r} Ric_{tt}
+\end{align}
+the for the $N=t$ and $N=z$ components respectively. Since $k \ne 0$ and $\mu \ne 0$, these force both remaining components to vanish.
+Thus, those redundant equations need not be considered separately.
+
+First, we can eliminate the $H_{tt}$ component from the system by substituting \cref{eq:E4} and its derivative into \cref{eq:E5,eq:E3}. 
+Then, equating the right-hand sides of \cref{eq:E2,eq:E3}, we find an equation for $H_{rr}'$ in terms of variables without derivatives. 
+Next, the derivatives in \cref{eq:E5} can be iteratively eliminated by first substituting the derivative of \cref{eq:E2} to eliminate $H_L''$ and then using the expression previously found for $H_{rr}'$, as well as \cref{eq:E1,eq:E2} to eliminate the remaining first-order derivatives.
+This leads to the following equation
+\begin{equation} \label{eq:E5Prime}
+    0=\frac{rk^2 (r-3M)-2 \mu^2 r^2}{2\mu(r- 2M)}H_{tr} - \frac{k^2 r^3+2 M}{2 r}H_{rr}+\frac{\mu^2 r^4-M(2r-3M)}{r^2 (r-2 M)^2}H_L.
+\end{equation}
+Since the only coefficient which never vanishes on the outside of the event horizon ($r > 2M$) is in front of the $H_{rr}$ term, it is natural to use this equation to eliminate $H_{rr}$ from \cref{eq:E1,eq:E2}.
+We are left with a system of two coupled, linear first order ODEs for the two remaining variables $H_{tr}, H_L$:
+\begin{align}
+    H_{tr}' &= \frac{2 \mu \left(-2 k^2 M r^3+r^4 \left(k^2+\mu^2\right)-M^2\right)}{(r-2 M)^2 \left(k^2 r^4+2 M r\right)}H_L +\frac{\left(M r \left(k^2 r^2+4\right)+r^4 \left(k^2+2 \mu^2\right)-4 M^2\right)}{r (2 M-r) \left(k^2 r^3+2 M\right)}H_{tr},  \\
+    H_L' &= \frac{\left(M r \left(k^2 r^2+2\right)H_L -\left(r^4 \left(k^2+2 \mu^2\right)\right)-4 M^2\right)}{r (2 M-r) \left(k^2 r^3+2 M\right)}+\frac{r^2 \left(k^4 r^3+k^2 (2 r-4 M)-4 \mu^2 r\right)}{2 \mu \left(k^2 r^3+2 M\right)}H_{tr}.
+\end{align} 
+However, since some coefficients vanish for particular values of $k,\mu,r$, it is not possible to consistently express one of the variables in terms of the other and its derivatives without singular points, as noted by Collingbourne
+\cite[Section~I.D]{collingbourne2021gregory}.
+
+
+\section{\label{sec:master}Master variable}
+We must therefore seek a different master variable which relates to the two variables $H_{tr}, H_L$ in a simple way.
+To this end, we multiply \cref{eq:E1} by $(r-2M)$ and then subtract $\mu$ times \cref{eq:E2} which gives a simple first-order ODE containing only the variables $H_{tr}, H_L$ and their derivatives
+\begin{equation}
+    (r-2 M) H_{tr}'-\mu H_L'=H_{tr} \left(-\frac{1}{2} k^2 r^2+\frac{2 M}{r}-2\right)+\frac{\mu (r-3 M) H_L}{r (r-2 M)}
+\end{equation}
+To conveniently express the left-hand side in terms of a single master variable, we define
+\begin{equation} \label{eq:Phi_def}
+    \Phi= (r-2 M) H_{tr}-\mu H_L.
+\end{equation}
+All other variables can then be expressed in terms of $\Phi$ and its first derivative $\Phi'$ using the following expressions
+\begin{align}
+    H_{tr} &= \frac{-2(r - 3M)\Phi - 2 r (r-2M)\Phi'}{(r- 2M) \left(k^2 r^3+2 M\right)}, \label{eq:HtrPhi}\\
+    H_L &= \frac{\left(4M - k^2 r^3-2 r\right)\Phi -     2r(r-2 M) \Phi '}{\mu \left(k^2 r^3+2 M\right)}, \label{eq:HLPhi} \\
+    H_{rr} &= \frac{1}{\mu(r-2M)}\left(\frac{12 M(r-3M)}{r\left(k^2 r^3+2 M\right)^2}-\frac{2 (r- 6M)}{r\left(k^2 r^3+2 M\right)} -\frac{2 \mu^2 r^3}{(r-2M)\left(k^2 r^3+2 M\right)}\right) \Phi  \nonumber  \\
+     &\quad + \left(\frac{12 M}{\mu \left(k^2 r^3+2 M\right)^2}-\frac{2 (3 M-r)}{\mu (2 M-r) \left(k^2 r^3+2 M\right)}\right) \Phi', \label{eq:HrrPhi} \\ 
+    H_{tt} &= \left[\frac{r-2M}{\mu} \left(\frac{12 M (r-3 M)}{r^3 \left(k^2 r^3+2 M\right)^2} -\frac{6 (r - 4M)}{r^3 \left(k^2 r^3+2 M\right)} -\frac{2}{r^3}\right)-\frac{2 \mu r}{k^2 r^3+2 M}\right] \Phi  \nonumber \\ 
+     &\quad + \frac{r-2M}{\mu} \left(\frac{12 M (r-2 M)}{r^2 \left(k^2 r^3+2 M\right)^2}-\frac{2 \left(3 r - 7 M\right)}{r^2 \left(k^2 r^3+2 M\right)}\right) \Phi'. \label{eq:HttPhi} 
+\end{align}
+With these expressions, equations \cref{eq:E1,eq:E2} reduce to the same second-order ODE in terms of the master variable $\Phi$
+\begin{align} \label{eq:master_ODE}
+    0 &= \Phi''(r) + P(r) \Phi'(r) + Q(r) \Phi(r), \\
+    P(r) &= \frac{12 M}{r \left(k^2 r^3+2 M\right)}-\frac{2 (r-3M)}{r (r-2M)}, \nonumber \\
+    Q(r) &= \frac{12 M(r-3M)}{r^2 (r-2M) \left(k^2 r^3+2 M\right)}- \frac{k^2 r}{r- 2M}-\frac{4 (r-4M)}{r^2 (r-2 M)} -\frac{\mu^2 r^2}{(r-2M)^2}. \nonumber
+\end{align}
+We point out that, contrary to Collingbourne \cite{collingbourne2021gregory}, we decide to include the $\mu$-dependent term in $Q(r)$ for a more general treatment of the transformation in \cref{sec:schroedinger}. 
+Both coefficients $P(r)$ and $Q(r)$ are non-singular on the exterior of the black ring $r \in(2M,\infty)$ and are therefore well suited for the following analysis.
+Direct computation reveals that all other equations \cref{eq:E4,eq:E3,eq:E5} are satisfied by the same solution.
+
+
+\section{\label{sec:relation_spherical} Relation to spherical gauge} 
+Collingbourne uses a different gauge introduced as spherical gauge \cite[Chapter~III]{collingbourne2021gregory}, resulting in a simpler ODE system, where the $H_z$ component can be used directly as the master variable $\mathfrak{h}$. 
+This turns out to be almost equivalent to the master variable $\Phi$ defined in \cref{sec:master}.  
+To see this, we inspect the gauge transformation between the transverse-traceless gauge \cref{eq:transverse_traceless_gauge} and the spherical gauge generated by the vector field
+\begin{equation}
+    \xi_M = \left(\frac{r ((r-2 M)H_{tr}-\mu H_L)}{2 M},-\frac{H_L}{2 (r-2 M)},\frac{i k r(\mu H_L - (r-2M)H_{tr})}{2 M\mu},0,0\right).
+\end{equation}
+The $zz$ component of the transformed perturbation $h^{(sg)} = h - \mathcal L_\xi g$ given by \cref{eq:H_zz_pg} with this generating vector field is given by
+\begin{equation} \label{eq:hfrak_phi}
+    \mathfrak{h}= \frac{k^2 r \left((r-2 M) H_{tr}-\mu H_L\right)}{M \mu} = \frac{k^2 r}{M \mu} \Phi.
+\end{equation}
+Thus, it is evident that most steps from here on can be carried out equivalently with the master variable $\Phi$ instead of $\mathfrak{h}$.
+
+\section{\label{sec:boundary} Boundary conditions}
+We will now investigate the permissible behavior of the solutions to \cref{eq:master_ODE} at the event horizon $r = 2M$ and at spacelike infinity $r \to \infty$.
+In general, the solutions to a second-order linear ODE form a two-dimensional vector space. Using a series expansion at the boundary points, we can find a basis for this space. Throughout this section, we will be referring to variations on Frobenius theorem detailed in \cite[Appendix~B]{collingbourne2021gregory}.
+\subsection{The future event horizon}
+Our desired mode solution should extend smoothly to the future event horizon $r = 2M$, and thus we will consider the behavior of the solutions in a neighborhood of this point.
+The ODE coefficients from \cref{eq:master_ODE} extend meromorphically to $r = 2M$ admit the expansion
+\begin{align}
+    P(r) &= \frac{1}{r-2M} +\left(\frac{6}{8 k^2 M^3+2 M}-\frac{3}{2 M}\right) + O(r-2M), \\
+    Q(r) &= -\frac{4M^2}{(r-2M)^2} +\left(\frac{2}{M}-\frac{3}{8 k^2 M^3+2 M}-2M(k^2 + 2\mu^2) \right)\frac{1}{r-2M} + O\left(1\right),
+\end{align}
+which agree to leading order with eq.~3.38 from Collingbourne's paper \cite{collingbourne2021gregory}. Thus for this regular singularity, we retrieve the same indicial equation
+\begin{equation}
+    I(\alpha) = \alpha^2 - 4M^2\mu^2
+\end{equation}
+with roots $\alpha_\pm = \pm 2M\mu$. In the following, we will only consider the generic case $4M\mu = N \not\in \mathbb{Z}_{> 0}$, since the other case only adds a logarithmic term to the $\Phi^{2M,+}$ solution, as detailed in \cite[Appendix~B]{collingbourne2021gregory}.
+Thus, the general solution is a linear superposition of the two independent solutions
+\begin{align}
+    \Phi^{2M,\pm}(r) &:=  (r-2M)^{\pm2M\mu}\sum_{n=0}^\infty a_n^\pm (r-2M)^{n},
+\end{align}
+where we can without loss of generality choose $a_0^\pm = 1$. Then, via the recursion relation, the first coefficients are given by
+\begin{equation}
+    a_1^\pm = \frac{-1 + 4M^2 (2\mu^2 - 3k^2) + 16 k^2 M^4(2 \mu^2 + k^2) \pm 6 M \mu \left(4 k^2 M^2-1\right)}{2 M\left(4 k^2 M^2+1\right) (1 \pm 4 M \mu)}.
+\end{equation}
+
+In order to assess the behavior of the solutions at the event horizon, we must work in a coordinate system which extends regularly to the event horizon. 
+A natural choice is the use of ingoing Eddington-Finkelstein coordinates $(v,r,z,\theta,\phi)$, which are defined by the transformation
+\begin{align}
+    v &= t + r^*, && r^*= r + 2M \ln(r-2M), \\
+\end{align}
+where $v$ is the new time coordinate and $r^*$ is the tortoise coordinate. 
+In those coordinates, the metric \cref{eq:unperturbed_metric} does not diverge at the event horizon and the mode solution from \cref{eq:transverse_traceless_gauge} takes the form
+\begin{align}
+    h_{MN}^{(EF)} &= (r-2M)^{-2M\mu} e^{\mu v - \mu r + ikz} H_{MN}^{(EF)}(r), \label{eq:harmonic_in_ef} \\
+    H_{vv}^{(EF)} &= H_{tt}, \\
+    H_{vr}^{(EF)} &= H_{tr} - \frac{r}{r-2M}H_{tt}, \\
+    H_{rr}^{(EF)} &= H_{rr} - \frac{r}{r-2M}H_{tr} + \frac{r^2}{(r-2M)^2} H_{tt},\\ 
+    H_{\theta\theta}^{(EF)} &= H_L, \\
+    H_{\phi\phi}^{(EF)} &= H_L \sin^2\theta.
+\end{align}
+Now plugging in the expressions for $H_{tt}, H_{tr}, H_{rr}, H_L$ from \cref{eq:HttPhi,eq:HtrPhi,eq:HrrPhi,eq:HLPhi} and using the expansion in the first two leading orders we find
+\begin{align}
+    H_{vv}^{(EF)} &= (r-2M)^{\pm 2M\mu}f_{vv}^{\pm}(r),\\
+    H_{vr}^{(EF)} &= (r-2M)^{\pm 2M\mu}\left(\frac{(1\mp 1) (4 M \mu+1)}{\left(4 k^2 M^2+1\right) (r-2 M)} + f_{vr}^{\pm}(r)\right),\\
+    H_{rr}^{(EF)} &= (r-2M)^{\pm 2M\mu}4M\left(-\frac{(1\mp 1) (4 M \mu+1)}{\left(4 k^2 M^2+1\right) (r-2 M)} - \frac{(1\mp 1)g_{rr}^{\pm}(r)}{(r-2 M)} + f_{rr}^{\pm}(r)\right),\\
+    H_{\theta\theta}^{(EF)} &= (r-2M)^{\pm 2M\mu}f_{L}^{\pm}(r),
+\end{align}
+where the functions $f_{vv}^{\pm}, f_{vr}^{\pm}, f_{rr}^{\pm}, g_{rr}^{\pm}, f_L^{\pm}$ are smooth and generally non-vanishing at the event horizon.
+Together with the prefactor $(r-2M)^{-2M\mu}$ from \cref{eq:harmonic_in_ef}, this shows that the perturbation can be smoothly extended to the event horizon, only if we choose the solution with the positive exponent $2M\mu$. Thus, only $\Psi^{2M,+}$, which decays at the event horizon, is admissible.
+
+\subsection{Spacelike Infinity}
+In this section, we construct a basis of solutions to \cref{eq:master_ODE} $\Phi^{\infty,\pm}$ which grow exponentially ($+$) and decay exponentially ($-$) respectively at spacelike infinity $r \to \infty$.
+For this, we first observe that the coefficients of \cref{eq:master_ODE} admit a convergent power series expansion in the neighborhood of $r = \infty$ given by
+\begin{equation}
+    P(r) = \sum_{n=0}^\infty \frac{p_n}{r^n}, \qquad Q(r) = \sum_{n=0}^\infty \frac{q_n}{r^n},
+\end{equation}
+with leading coefficients $p_0 =0, p_1 = -2, q_0 = -(k^2 + \mu^2)$ and $q_1 = -2M(k^2 + 2\mu^2)$. Hence, it is an irregular singular point, and we apply Theorem B.3. from \cite{collingbourne2021gregory} to find
+\begin{equation}
+    \lambda_\pm =\pm\sqrt{k^2 + \mu^2}, \qquad \mu_\pm = 1 \pm \frac{M(k^2 + 2\mu^2)}{\sqrt{k^2 + \mu^2}},
+\end{equation}
+and the asymptotic behavior for the two solutions
+\begin{equation}
+    \Phi^{\infty,\pm}(r) = r^{\mu_\pm} e^{\lambda_\pm r}\left(1 + \mathcal{O}(1/r)\right).
+\end{equation}
+From the expressions for the metric perturbation components \cref{eq:HttPhi,eq:HtrPhi,eq:HrrPhi,eq:HLPhi} we can see that for non-vanishing $\mu$ all entries will exponentially decay in the case of $\Phi^{\infty,-}$ and grow in the case of $\Phi^{\infty,+}$. Thus, only the solution $\Phi^{\infty,-}$ is admissible.
+
+\section{\label{sec:schroedinger} Schr{\"o}dinger form}
+To apply the tools of quantum mechanics, we want to cast the second-order ODE \cref{eq:master_ODE} into a Schr{\"o}dinger form
+\begin{equation} \label{eq:schroedinger_form}
+    -\Psi''(x) + V(x)\Psi(x) = E(\mu)\Psi(x).
+\end{equation}
+Here, the only $\mu$-dependent term should be the $r$-independent term $E(\mu)$ which takes over the role of the energy eigenvalue in the time independent Schr{\"o}dinger equation. This will allow the use of quantum mechanics inspired methods like the variational method, to prove the existence of well behaved solutions.
+\begin{comment} In addition, we require that the image of $E$ contains $(-\infty, 0]$. Via a variational argument, we can then show that the hermitian operator $\hat H = -\partial_x^2 + V(x)$ has a negative lowest energy eigenvalue and thus the existence of a specific value for $\mu$, for which the \cref{eq:schroedinger_form} has an $L^2$-solution.
+\end{comment}
+
+Our ansatz consists of the substitution $\Phi(r) = w(r)\Psi(x(r))$ to multiply the master variable with a positive weight function $w(r) > 0$ and to transform the radial variable by diffeomorphism $r \to x(r)$.
+After substituting the ansatz into \cref{eq:master_ODE}, and dividing the equation by the non-vanishing function $-w(r)x'(r)^2$, the original equation \cref{eq:master_ODE} takes the form
+\begin{align} \label{eq:master_with_ansatz}
+    0 &=-\Psi''(x(r))-\frac{P(r) w(r) x'(r)+2 w'(r) x'(r)+w(r) x''(r)}{w(r) x'(r)^2}\Psi'(x(r)) \nonumber \\ &\quad -\frac{P(r) w'(r)+Q(r) w(r)+w''(r)}{w(r) x'(r)^2}\Psi(x(r))
+\end{align}
+Setting the coefficient of the first derivative term to zero, we find a differential equation for the weight function
+\begin{equation} \label{eq:ode_weight_function}
+     \frac{w'(r)}{w(r)} = - \frac{1}{2}\left(P(r) + \frac{x''(r)}{x'(r)}\right)
+\end{equation}
+which can be explicitly solved by integration
+\begin{equation} \label{eq:weight_function}
+    w(r) = x'(r)^{-1/2}\exp\left(-\frac{1}{2}\int_{r_0}^r P(s) ds\right)
+\end{equation}
+for some reference point $r_0$ within the domain. Substituting \cref{eq:ode_weight_function} into \cref{eq:master_with_ansatz} and comparing the coefficient of $\Psi(x)$ allows identifying the potential term
+\begin{equation}
+    V(x) - E(\mu) = \frac{2 P'(r)+P(r)^2-4 Q(r)}{4 x'(r)^2}+\frac{x'''(r)}{2 x'(r)^3}-\frac{3 x''(r)^2}{4 x'(r)^4}.
+\end{equation}
+In order to use the variational argument, the potential $V(x)$ must be independent of $\mu$. In the case of $P(r),Q(r)$ given by \cref{eq:master_ODE} the only $\mu$-dependent term on the right-hand side is $\mu^2 r^2/\left[(r-2M)^2x'(r)^2\right]$. 
+This allows us to choose $x(r)$ in a $\mu$-independent way and make the coefficient of $\mu^2$ constant. This leads to the choice
+\begin{align}
+    x&: (2M, \infty) \to \mathbb{R}, \quad r \to x(r) = \hat r + \log(\hat r - 1), \\
+    E(\mu) &= -4M^2 \mu^2, \\
+    w &= 2M (1+ \hat k^2 \hat r^3)/\hat r^2, \\
+    V &= \left(\hat{r}-1\right) \left(\frac{\hat{k}^2}{\hat{r}}-\frac{6 \left(4 \hat{r}-5\right)}{\hat{r}^4 \left(\hat{k}^2 \hat{r}^3+1\right)}+\frac{18 \left(\hat{r}-1\right)}{\hat{r}^4 \left(\hat{k}^2 \hat{r}^3+1\right)^2}+\frac{6 \hat{r}-11}{\hat{r}^4}\right), \label{eq:potential}
+\end{align}
+where we have defined the dimensionless variables $\hat r = r/(2M) \in (1,\infty)$ and $\hat k = 2Mk$. 
+The boundary conditions from \cref{sec:boundary} can be translated to the Schr{\"o}dinger form via $\Psi(x) = \hat{r}^2\Phi(r)/(1+ \hat k^2 \hat r^3)$ which leads to the bases of solutions $\Psi^{-\infty,\pm}(x)$ for $x\to -\infty$ at the future event horizon and $\Psi^{\infty,\pm}(x)$ for $x\to \infty$ at spacelike infinity. 
+The solutions $\Psi^{-\infty,-}(x)$ and $\Psi^{\infty,+}(x)$ are both diverging for $x\to \pm \infty$ respectively. The admissible solutions have the asymptotic behavior
+\begin{align}
+    \Psi^{-\infty,+}(x) &= \frac{\hat{r}^2\Phi(r)}{1+ \hat k^2 \hat r^3} = \mathcal{O}\left((\hat r - 1)^{2M\mu}\right) = \mathcal{O}(e^{-2M\mu |x|}) \text{ as } x\to -\infty\\
+    \Psi^{\infty,-}(x) &= \mathcal{O}\left(e^{-2M\mu r}r^{1-\frac{M(k^2 + 2\mu^2)}{\sqrt{k^2 + \mu^2}}}\right) = \mathcal{O}\left(e^{-2M\mu x}x^{1-\frac{M(k^2 + 2\mu^2)}{\sqrt{k^2 + \mu^2}}}\right) \text{ as } x\to \infty 
+\end{align}
+and are thus both square-integrable on their half of the real line.
+The general solution of the differential equation can be written as a linear superposition:
+\begin{equation}
+    \Psi(x) = c_{+} \Psi^{-\infty,+}(x) + c_{-}\Psi^{-\infty,-}(x) = k_{+} \Psi^{\infty,+}(x) + k_{-}\Psi^{\infty,-}(x).
+\end{equation}
+From the boundary condition at the event horizon we require $c^{-\infty,-} = 0$ and from the one at spacelike infinity we at the same time require $c^{\infty,+} = 0$. This requirement is thus equivalent with there being an $L^2$-solution to the Schr{\"o}dinger equation \cref{eq:schroedinger_form}. 
+From that point we can use a variational argument to show that the hermitian operator $\hat H = -\partial_x^2 + V(x)$ over the space $H^1$ has a negative energy eigenvalue and thus the existence of a specific value for $\mu>0$ such that \cref{eq:schroedinger_form} has an $L^2$-solution. 
+This can be shown by finding an $H^1$ test function $u_T(x)$ such that the expectation value
+\begin{equation} \label{eq:expectation_value}
+    \langle u_T , \hat H u_T \rangle = \int_{-\infty}^\infty \left( |\partial_x u_T(x)|^2 + V(x) |u_T(x)|^2\right)dx
+\end{equation}
+is negative. In chapter IV.C, Collingbourne \cite{collingbourne2021gregory} shows that for values of $|\hat k| \in \left[\frac{3}{10}, \frac{8}{10}\right]$ there exists such a test function. 
+Furthermore, since the potential $V(x)$ is smooth, the weak $H^1$ solutions to the Schr{\"o}dinger equation are also smooth by the regularity theorem for the Schr{\"o}dinger equation from Vol. II, p. 55 of \cite{reed1975ii}
+
+\section{\label{sec:conclusion}Conclusion}
+In summary, we have shown the dynamic instability of the black string through the existence of a specific mode solution to the linearized Einstein field equations with regular behavior at the event horizon and at spacelike infinity which grows exponentially in time. In the case of a black ring with radius $R$ we have additional periodic boundary conditions which require that $kR \in \mathbb{Z}$.
+Since $kR \geq 1$ and $k\in [\frac{3}{20M}, \frac{8}{20M}]$ for the existence of such a growing mode, we find that the instability is present for all black rings with $R \geq 20M/8$, when they are long and thin enough to resemble a black string.
+Whilst this linear instability rules out the existence of such black rings for long durations of time, it does not predict what final state the black ring will evolve to. The final states have been investigated numerically and reveal interesting fractal geometry\cite{lehner2012final}.
+
+Our proof improves upon Collingbourne's preceding work in the following aspects: In \cref{sec:gauge_invariants} We motivate the form of \cref{eq:transverse_traceless_gauge} as being equivalent to a general scalar-type spherically symmetric ($l=0$) mode in the formalism of \cite{ishibashi2011perturbations} under harmonic gauge. Since the four remaining components in harmonic gauge can be viewed as gauge-invariant linear combinations of perturbation components in an arbitrary gauge, we consider them as a complete set of gauge-invariant quantities. Linearized Einstein Field Equations \cref{eq:linearized_ESFE} for those gauge-invariant variables can then be reduced to a single master equation in terms of one gauge-invariant master variable (\cref{sec:master}). By examining the boundary conditions in \cref{sec:boundary} and recasting this equation into a Schr{\"o}dinger form in \cref{sec:schroedinger} we translate the problem into an eigenvalue problem. Through this gauge-free approach we avoid having to switch between spherical and harmonic/transverse-traceless gauge, all while still arriving at the same Schr{\"o}dinger equation as Collingbourne.
+ 
+\appendix
+\section{\label{sec:appendix_hermitian}More general transformation to hermitian form}
+In this additional section, we will briefly consider a more general transformation, which might be necessary for a different choice of master variable. It would be advantageous whenever the $\mu$-dependence of the coefficients $P(r), Q(r)$ in \cref{eq:master_ODE} is more complicated, and therefore recasting in the Schr{\"o}dinger form of \cref{eq:schroedinger_form} is not easily possible.
+The variational argument can, in general, be applied to any differential equation of the form
+\begin{equation} \label{eq:general_ODE}
+    \hat H \Psi(x) = E(\mu) \hat G \Psi(x),
+\end{equation}
+where $\hat H,\hat G: \mathcal H_1 \to \mathcal H_2$ are $\mu$-independent linear differential operators between the Hilbert spaces $\mathcal H_1$ and $\mathcal H_2$, $\hat G$ is invertible, $\hat HG^*$ is hermitian as an operator on $\mathcal H_2$, and $E(\mu)$ is a $\mu$-dependent function whose image contains $(-\infty, 0]$.
+Then \cref{eq:general_ODE} can be transformed into an eigenvalue-equation for $\hat G^{-1} \hat H$. Since $\hat G^{-1}\hat H = \hat G^{-1} (\hat H\hat G^*) (\hat G^*)^{-1}$, it is also hermitian. To show that it has a negative eigenvalue, we can find a test function with the specific ansatz $u_T(x) = \hat G^* v_T(x)$ in the function space where $\hat G^*$ is the Hilbert adjoint of $\hat G$ such that the expectation value
+\begin{equation} \label{eq:expectation_value_general}
+    E(u_T)=\langle u_T , \hat G^{-1} \hat H  u_T \rangle = \langle v_T, \hat H \hat G^*v_T \rangle < 0
+\end{equation}
+is negative.
+In our case we might be interested in the particular form
+\begin{equation} \label{eq:general_ODE2}
+    \hat H =  \partial_x^2 a(x)+  \partial_x b(x) + c(x), \qquad \hat G =  \partial_x^2d(x) + \partial_xe(x) + f(x),
+\end{equation}
+with $C^4$ coefficients $a(x), b(x), c(x), d(x), e(x), f(x)$. Consequently,
+\begin{equation}
+    \hat G^* = d^*(x)\partial_x^2 - e^*(x) \partial_x + f^*(x),
+\end{equation}
+and we can find conditions such that $\hat H \hat G^*$ is hermitian in the form of differential equations on the coefficients by direct computation. 
+Then one needs to check that $\hat G$ is invertible, which can be done via a Green's function approach, if the Hilbert space $\mathcal H_2$ is appropriately chosen. 
+Finally, we again consider an ansatz of the form $\Phi(x) = w(r)\Psi(x(r))$ as in \cref{sec:schroedinger} to transform the master equation. Then one needs to determine the coefficients $a$ to $f$, the weight function $w$, the diffeomorphism $x(r)$ and the energy function $E(\mu)$ such that the resulting equations are satisfied.
+
+\section{\label{sec:appendix_master_var}General Master Variables}
+One might be interested in a more general master variable $\Xi(r)$ which is a linear combination of the gauge invariants from \cref{sec:gauge_invariants}.
+Since all gauge invariants can be expressed in terms of the master variable $\Phi$ and its first derivative via \cref{eq:HtrPhi,eq:HLPhi,eq:HrrPhi,eq:HttPhi}, it must take the form 
+\begin{equation} \label{eq:general_master_variable}
+    \Xi(r) = \alpha(r)\Phi(r) + \beta(r)\Phi'(r).
+\end{equation}
+With the help of the chain rule, we find for the first derivative
+\begin{equation} \label{eq:Xi_prime}
+    \Xi'(r) = \alpha'(r)\Phi(r) + (\alpha(r) + \beta'(r))\Phi'(r)+ \beta(r)\Phi''(r).
+\end{equation} 
+Then, using the second-order ODE \cref{eq:master_ODE} we can eliminate $\Phi''(r)$ and write \cref{eq:general_master_variable,eq:Xi_prime} as a matrix equation
+\begin{equation} \label{eq:master_var_matrix}
+    \begin{pmatrix}
+        \Xi \\ \Xi'
+    \end{pmatrix} = 
+    \begin{pmatrix}
+        \alpha & \beta \\ 
+        \alpha' - \beta Q & \alpha + \beta' - \beta P
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Phi \\ \Phi'
+    \end{pmatrix},
+\end{equation}
+where we have omitted the dependence on $r$ for clarity and used the coefficients from \cref{eq:master_ODE}. 
+A necessary requirement for such a master variable is that all gauge invariants can be expressed in terms of it and its derivatives. 
+Then, as a consequence, we can also express $\Phi$ from \cref{eq:Phi_def} as a linear combination of $\Xi$ and its derivatives. Furthermore, since we want $\Xi$ to also satisfy a linear second order ODE of the type \cref{eq:master_ODE} with different coefficients, we can also determine $\Phi'$ in terms of $\Xi$ and $\Xi'$ only after eliminating the second order derivatives.
+In summary, the matrix from \cref{eq:master_var_matrix} has to be invertible, and thus the determinant
+\begin{equation}
+    \Delta = \alpha^2 + \beta'\alpha - \beta\alpha P - \beta\alpha' + \beta^2 Q \ne 0
+\end{equation}
+non-vanishing everywhere.
+This is trivially the case when $\beta =0, \alpha = k^2 r/(M\mu)$ which gives Collingbourne's master variable $\mathfrak{h}$ from \cref{eq:hfrak_phi}.
+The second-order ODE for the new master variable $\Xi$ can then be retrieved from the following
+\begin{equation} \label{eq:master_var_ODE}
+    \Xi''(r) = \partial_r[ (\alpha' - \beta Q)\Phi + (\alpha + \beta' - \beta P)\Phi']
+\end{equation}
+by eliminating $\Phi''$, inverting the matrix equation \cref{eq:master_var_matrix} and then changing the variables from $\Phi$ to $\Xi$ on the right-hand side.
+
+\bibliography{refs.bib}
+
+\end{document}
+%
+% ****** End of file aiptemplate.tex ******
