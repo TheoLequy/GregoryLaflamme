@@ -1,5 +1,5 @@
 # GregoryLaflamme
-This paper is the result of my Semester Thesis with Prof. Peter Hinty in higher dimensional General Relativity. 
+This paper is the result of my Semester Thesis with Prof. Peter Hintz in higher dimensional General Relativity. 
 Based on the proof of Collinbourne [1] an approoach with gauge-invariants is used to show that Black Strings and Rings in 5 dimensions have a mode instability, the so called Gregory-Laflamme Instability. All derivations can be found in the Mathematica notebook.
 
 Abstract:
